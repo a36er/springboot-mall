@@ -1,12 +1,16 @@
 package com.ambersu.springbootmall.model;
 
+import com.ambersu.springbootmall.constant.ProductCategory;
+
 import java.util.Date;
 
 public class Product {
 
     private Integer productId;
     private String productName;
-    private String category;
+    // refactor category to enum
+    private ProductCategory category;
+    //private String category;
     private String imageUrl;
     private Integer price;
     private Integer stock;
@@ -14,6 +18,13 @@ public class Product {
     private Date createDate;
     private Date lastModifiedDate;
 
+    public ProductCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(ProductCategory category) {
+        this.category = category;
+    }
 
     public Integer getProductId() {
         return productId;
@@ -31,13 +42,7 @@ public class Product {
         this.productName = productName;
     }
 
-    public String getCategory() {
-        return category;
-    }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
 
     public String getImageUrl() {
         return imageUrl;
