@@ -4,7 +4,11 @@ import com.ambersu.springbootmall.dto.ProductRequest;
 import com.ambersu.springbootmall.model.Product;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 public interface ProductDao {
+
+    List<Product> getProducts();
 
     Product getProductById(Integer productId);
 
