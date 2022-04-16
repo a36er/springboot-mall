@@ -5,6 +5,7 @@ import com.ambersu.springbootmall.dto.ProductQueryParams;
 import com.ambersu.springbootmall.dto.ProductRequest;
 import com.ambersu.springbootmall.model.Product;
 import com.ambersu.springbootmall.service.ProductService;
+import com.ambersu.springbootmall.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(
+    public ResponseEntity<Page<Product>> getProducts(
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search,
             @RequestParam(defaultValue = "created_date") String orderBy,
@@ -46,9 +47,16 @@ public class ProductController {
         productQueryParams.setOffset(offset);
 
         List<Product> productList = productService.getProducts(productQueryParams);
+        Integer total = productService.getCountProducts(productQueryParams);
 
 
-        return ResponseEntity.status(HttpStatus.OK).body(productList);
+        Page<Product> page = new Page<>();
+        page.setLimit(limit);
+        page.setOffset(offset);
+        page.setTotal(total);
+        page.setResults(productList);
+
+        return ResponseEntity.status(HttpStatus.OK).body(page);
     }
 
     @GetMapping("/products/{productId}")
